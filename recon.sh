@@ -1,5 +1,5 @@
 #!/bin/bash
-baseDir="/home/kali/cybertools/BugBounty"
+baseDir="/change/to/target/directory"
 
 if [[ -d "$baseDir" ]]; then
     for dir in "$baseDir"/*/; do
