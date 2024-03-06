@@ -1,5 +1,16 @@
 # Automated-Recon
+```bash
 
+(                   (                              
+ )\ )                   )\ )                           
+(()/(  (               (()/(   )       (  (    (  (    
+ /(_))))\ (  (   (      /(_)( /(  (    )\))(  ))\ )(   
+(_)) /((_))\ )\  )\ )  (_)) )(_)) )\ )((_))\ /((_(()\  
+| _ (_)) ((_((_)_(_/(  | _ ((_)_ _(_/( (()(_(_))  ((_) 
+|   / -_/ _/ _ | ' \)) |   / _` | ' \)/ _` |/ -_)| '_| 
+|_|_\___\__\___|_||_|  |_|_\__,_|_||_|\__, |\___||_|   
+                               |___/        
+```
 This script is an attempt at automating some of the first steps for bug bounty hunting.
 
 To use this tool , create a directory for all your targets in the following format. The roots file will contain your chosen subdomains.
