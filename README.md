@@ -5,7 +5,7 @@ ______
 | |_/ /___  ___ ___  _ __    
 |    // _ \/ __/ _ \|  _ \  
 | |\ \  __/ (_| (_) | | | | 
-\_| \_\___|\___\___/|_| |_| Ranger
+\_| \_\___|\___\___/|_| |_| Ranger Automated Recon
 
 ```
 This script is an attempt at automating some of the first steps for bug bounty hunting.
