@@ -1,6 +1,7 @@
 #!/bin/bash
 baseDir="/change/to/target/directory"
 
+
 echo "______                         "
 echo "| ___ \                      "
 echo "| |_/ /___  ___ ___  _ __    "
@@ -17,7 +18,7 @@ if [[ ! -d "$baseDir" ]]; then
 fi
 
 # Check if required commands are available
-required_commands=("subfinder" "dnsx" "httpx" "smap" "nuclei" "anew")
+required_commands=("subfinder" "dnsx" "httpx" "smap" "nuclei" "anew" "altdns")
 missing_commands=()
 for cmd in "${required_commands[@]}"; do
     if ! command -v "$cmd" &>/dev/null; then
@@ -42,6 +43,9 @@ for dir in "$baseDir"/*/; do
         subfinder -dL "${dir}/roots.txt" | dnsx | anew "${dir}/resolveddomains.txt" || { echo "Error in subfinder or dnsx command"; exit 1; }
         httpx -l "${dir}/resolveddomains.txt" -t 75 | anew "${dir}/webservers.txt" || { echo "Error in httpx command"; exit 1; }
         smap -iL "${dir}/resolveddomains.txt" | anew "${dir}/openports.txt" || { echo "Error in smap command"; exit 1; }
+        #permutate the list of resolved domains using given list (permutations.txt)
+        altdns -i "${dir}/resolveddomains.txt" -o "${dir}/alt_output_dump" -w permutations.txt -r -s "${dir}/altresolveddomains.txt" | anew "${dir}/altresolveddomains.txt" || { echo "Error in altdns command"; exit 1; }
+        #perform run of nuclei and all default templates
         nuclei -l "${dir}/resolveddomains.txt" -rl 5 -c 5 -o "${dir}/nuclei_results.txt" || { echo "Error in nuclei command"; exit 1; }
     else
         programName=$(basename "$dir")
