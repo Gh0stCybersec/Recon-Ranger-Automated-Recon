@@ -7,7 +7,7 @@ echo "| ___ \                      "
 echo "| |_/ /___  ___ ___  _ __    "
 echo "|    // _ \/ __/ _ \|  _ \  "
 echo "| |\ \  __/ (_| (_) | | | | "
-echo "\_| \_\___|\___\___/|_| |_| Ranger"
+echo "\_| \_\___|\___\___/|_| |_| Ranger Automated Recon"
 echo "Created by Gh0st"
 echo "Github: https://github.com/Gh0stCybersec"
 
