@@ -58,6 +58,7 @@ done
 # add amass?
 # add nuclei templates 
 # directory brute force - for loop , loop each line in domains.txt and send to gobuster
+# add gungir run? 
 
    
 
