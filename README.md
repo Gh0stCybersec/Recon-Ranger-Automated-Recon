@@ -21,3 +21,10 @@ To use this tool , create a directory for all your targets in the following form
 │   │   ├── roots.txt 
 ```
 Recon script will create folders in the same location as roots with the output results. 
+
+Ensure you can execute the script 
+
+
+```bash
+chmod +x scanner.sh
+```
