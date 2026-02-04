@@ -1,0 +1,78 @@
+#!/bin/bash
+
+# Name the directory the target organisation
+# Set a domains.txt file to act as the root file
+
+# Base Directory for root domains
+baseDir="/home/ghost/recon"
+
+if [[ -d "$baseDir" ]]; then
+    for dir in "$baseDir"/*/; do
+        if [[ -f "${dir}/domains.txt" ]]; then
+            programName=$(basename "$dir")
+            echo "Recon for $programName...."
+
+            # Subdomain enumeration + resolution
+            subfinder -dL "${dir}/domains.txt" \
+                | alterx \
+                | dnsx \
+                | tee "${dir}/resolved_domains.txt"
+
+            # DNS records
+            dnsx -l "${dir}/resolved_domains.txt" \
+                -a -aaaa -cname -json -silent \
+                > "${dir}/dns_records.json"
+
+            # HTTP probing (tech detection)
+            httpx -l "${dir}/resolved_domains.txt" \
+                -title -status-code -content-type -tech-detect -t 75 \
+                | tee "${dir}/httpx_techdetect.txt"
+
+            # HTTP probing (basic)
+            httpx -l "${dir}/resolved_domains.txt" \
+                | tee "${dir}/httpx_webservers.txt"
+
+            # Crawling
+            katana -list "${dir}/httpx_webservers.txt" \
+                -jc -kf all \
+                -o "${dir}/katana.txt"
+
+            # Port scanning
+            smap -iL "${dir}/resolved_domains.txt" \
+                | tee "${dir}/smap_openports.txt"
+
+            # Historical URLs
+            gau --threads 20 < "${dir}/resolved_domains.txt" \
+                | tee "${dir}/gau.txt"
+
+            waybackurls < "${dir}/resolved_domains.txt" \
+                | tee "${dir}/wayback.txt"
+
+            # Screenshots
+            gowitness scan file \
+                -f "${dir}/resolved_domains.txt" \
+                --threads 50 \
+                --write-db "${dir}/gowitness.db"
+
+            gowitness server --db "${dir}/gowitness.db" &
+
+            # Nuclei DNS / takeover checks
+            nuclei -l "${dir}/dns_records.json" \
+                -tags dns,tech,takeover \
+                -stats \
+                | tee "${dir}/takeovers.txt"
+
+            # Nuclei web vulnerabilities
+            nuclei -l "${dir}/httpx_webservers.txt" \
+                -tags cve,misconfig,exposure \
+                -severity high,critical \
+                -rate-limit 100 \
+                -stats
+
+        else
+            echo "$(date): No root domains found for $(basename "$dir")!"
+        fi
+    done
+else
+    echo "$(date): Directory '$baseDir' does not exist."
+fi
