@@ -1,7 +1,6 @@
 #!/bin/bash
 
-# Name the directory the target organisation
-# Set a domains.txt file to act as the root file
+# Usage: Place target domains in /home/ghost/recon/<org_name>/domains.txt
 
 # Base Directory for root domains
 baseDir="/home/ghost/recon"
@@ -76,3 +75,11 @@ if [[ -d "$baseDir" ]]; then
 else
     echo "$(date): Directory '$baseDir' does not exist."
 fi
+
+## Statistics
+- **Total Resolved Domains:** $(wc -l < "${output}/resolved_domains.txt" 2>/dev/null || echo "0")
+- **Live Web Servers:** $(wc -l < "${output}/httpx_webservers.txt" 2>/dev/null || echo "0")
+- **Crawled URLs:** $(wc -l < "${output}/katana.txt" 2>/dev/null || echo "0")
+- **Historical URLs:** $(wc -l < "${output}/historical_urls.txt" 2>/dev/null || echo "0")
+- **DNS Takeover Findings:** $(wc -l < "${output}/nuclei_dns_takeovers.txt" 2>/dev/null || echo "0")
+- **Web Vulnerabilities:** $(wc -l < "${output}/nuclei_web_vulns.txt" 2>/dev/null || echo "0")
