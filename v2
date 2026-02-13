@@ -69,9 +69,5 @@ else
     echo "$(date): Directory '$baseDir' does not exist."
 fi
 
-## Statistics
-- **Total Resolved Domains:** $(wc -l < "${dir}/resolved_domains.txt" 2>/dev/null || echo "0")
-
-
 # Start Gowitness Server at http://127.0.0.1:7171/
 gowitness report server
