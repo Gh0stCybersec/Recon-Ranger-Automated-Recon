@@ -2,16 +2,6 @@
 # Base Directory for root domains
 baseDir="${1:-/home/gh0st/Documents/BugBounty}"
 
-
-echo "______                         "
-echo "| ___ \                      "
-echo "| |_/ /___  ___ ___  _ __    "
-echo "|    // _ \/ __/ _ \|  _ \  "
-echo "| |\ \  __/ (_| (_) | | | | "
-echo "\_| \_\___|\___\___/|_| |_| Ranger Automated Recon"
-echo "Created by Daniel Jennings"
-echo "Github: https://github.com/Gh0stCybersec"
-
 if  [[ -d "$baseDir" ]]; then
     for dir in "$baseDir"/*/; do    
         if [[ -f "${dir}/roots.txt" ]]; then
